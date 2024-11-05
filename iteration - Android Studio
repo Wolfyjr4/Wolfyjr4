@@ -1,0 +1,62 @@
+package com.example.iteration;
+
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import java.util.Random;
+
+public class MainActivity extends AppCompatActivity {
+
+    // Declare the views
+    private TextView tvNumbers;
+    private EditText etIterations;
+    private Button btnGenerate;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        // Initialize the views
+        tvNumbers = findViewById(R.id.tvNumbers);
+        etIterations = findViewById(R.id.etIterations);
+        btnGenerate = findViewById(R.id.btnGenerate);
+
+        // Set a click listener on the button
+        btnGenerate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                generateRandomNumbers();
+            }
+        });
+    }
+
+    // Function to generate random numbers and display them
+    private void generateRandomNumbers() {
+        // Get the number of iterations from the EditText
+        String iterationsStr = etIterations.getText().toString();
+        if (iterationsStr.isEmpty()) {
+            etIterations.setError("Please enter a number");
+        }
+
+        int iterations = Integer.parseInt(iterationsStr);
+        Random random = new Random();
+        StringBuilder result = new StringBuilder("Generated Numbers:\n ");
+
+        // Loop N times to generate random numbers
+        for (int i = 0; i < iterations; i++) {
+            int randomNumber = random.nextInt(1000);  // Generate random number between 0-99
+            result.append(randomNumber);
+
+            if (i < iterations - 1) {
+                result.append(", ");  // Add comma between numbers, but not after the last one
+            }
+        }
+
+        // Update the TextView with the concatenated numbers
+        tvNumbers.setText(result.toString());
+    }
+}
