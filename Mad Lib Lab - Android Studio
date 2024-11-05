@@ -1,0 +1,63 @@
+package com.example.madliblab;
+
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
+public class MainActivity extends AppCompatActivity {
+
+    private EditText editTextName;
+    private EditText editTextPlace;
+    private EditText editTextNumber;
+    private EditText editTextAdjective;
+    private TextView textViewMadLib;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        // Initialize UI elements
+        editTextName = findViewById(R.id.editTextName);
+        editTextPlace = findViewById(R.id.editTextPlace);
+        editTextNumber = findViewById(R.id.editTextNumber);
+        editTextAdjective = findViewById(R.id.editTextAdjective);
+        Button buttonGenerate = findViewById(R.id.buttonGenerate);
+        textViewMadLib = findViewById(R.id.textViewMadLib);
+
+        // Set click listener for the button
+        buttonGenerate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                generateMadLib();
+            }
+        });
+    }
+
+    private void generateMadLib() {
+        // Get values from the input fields
+        String name = editTextName.getText().toString().trim();
+        String place = editTextPlace.getText().toString().trim();
+        String numberStr = editTextNumber.getText().toString().trim();
+        String adjective= editTextAdjective.getText().toString().trim();
+
+        // Parse the number and double it
+        int number = 0;
+        try {
+            number = Integer.parseInt(numberStr) * 2;
+        } catch (NumberFormatException e) {
+            // Handle the exception by setting a default or showing an error
+            number = 0;
+        }
+
+        // Construct the Mad Lib story
+        String madLib = name + " went " + place + " with " + adjective + " excitement. "
+                + "When they arrived, they found " + number + " surprises waiting for them!";
+
+        // Display the Mad Lib story in the TextView
+        textViewMadLib.setText(madLib);
+    }
+}
