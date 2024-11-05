@@ -1,0 +1,60 @@
+package com.example.ex2_4_random_number_generator;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.Random;
+
+public class MainActivity extends AppCompatActivity {
+
+    private EditText editTextLowerBound, editTextUpperBound;
+    private Button buttonGenerate;
+    private TextView textViewRandomNumber;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        editTextLowerBound = findViewById(R.id.editTextLowerBound);
+        editTextUpperBound = findViewById(R.id.editTextUpperBound);
+        buttonGenerate = findViewById(R.id.buttonGenerate);
+        textViewRandomNumber = findViewById(R.id.textViewRandomNumber);
+
+        // Set a click listener for the button
+        buttonGenerate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                generateRandomNumber();
+            }
+        });
+    }
+
+    private void generateRandomNumber() {
+        String lowerBoundStr = editTextLowerBound.getText().toString();
+        String upperBoundStr = editTextUpperBound.getText().toString();
+
+        if (lowerBoundStr.isEmpty() || upperBoundStr.isEmpty()) {
+            Toast.makeText(this, "Please enter both bounds", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        int lowerBound = Integer.parseInt(lowerBoundStr);
+        int upperBound = Integer.parseInt(upperBoundStr);
+
+        if (lowerBound >= upperBound) {
+            Toast.makeText(this, "Lower bound should be less than upper bound", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Random random = new Random();
+        int randomNumber = random.nextInt((upperBound - lowerBound) + 1) + lowerBound;
+
+        textViewRandomNumber.setText(String.valueOf(randomNumber));
+    }
+}
