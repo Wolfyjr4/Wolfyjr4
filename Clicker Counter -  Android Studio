@@ -1,0 +1,30 @@
+package com.example.clickercounter20;
+
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        // Find the button by its ID
+        Button buttonClick = findViewById(R.id.button_click);
+
+        // Set an OnClickListener for the button
+        buttonClick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Get the current text from the button, convert it to an integer, increment, and update the text
+                String currentText = buttonClick.getText().toString(); // Get text as String
+                int currentCount = Integer.parseInt(currentText); // Convert text to int
+                currentCount++; // Increment the count
+                buttonClick.setText(String.valueOf(currentCount)); // Convert back to String and set as text
+            }
+        });
+    }
+}
